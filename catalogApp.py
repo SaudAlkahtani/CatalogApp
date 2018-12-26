@@ -193,6 +193,16 @@ def catalogJSON():
     return jsonify(info)
 
 
+@app.route('/item/<id>')
+def itemJSON(id):
+    item = session.query(Item).filter_by(id=id).first()
+    if item is None:
+        flash('No item found with this id', category='warning')
+        return redirect(url_for('displayCategories'))
+    item = session.query(Item).filter_by(id=id).one()
+    return jsonify(item.serialize)
+
+
 @app.route('/Catalog/<title>/items')
 def browseCategory(title):
     # show all items in Category

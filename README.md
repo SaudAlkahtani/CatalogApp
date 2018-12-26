@@ -17,7 +17,8 @@
     - The id of the user. 
     - The email of the user.
     - The full name of the user.
-    - The photo of the user
+    - The photo of the user.
+
 ## Steps you need to run this code:
  - Install the required software:
    - a.Vagrant: https://www.vagrantup.com/downloads.html
@@ -42,3 +43,5 @@
     python catalogApp.py
     ```       
 - The project should be excuted and now you can browse the item catalog by going to your prefered internet browser and enter the url: http://localhost:5000/ 
+- To view the database as JSON format you can use the following url: http://localhost:5000/Catalog/json
+- To view info of specefic item as JSOn you use the following url: http://localhost:5000/item/1 where "1" is the id of the item 
