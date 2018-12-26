@@ -1,0 +1,18 @@
+
+    {% include "header.html" %}
+    {% include "messages.html" %} 
+        <div class="content">
+            
+            {% include "categories.html" %}
+            </div>
+            <div class="latest">
+                <h1 class="headline h1">Latest</h1>
+                {% for item in latest %}
+                <a href="{{url_for('ItemInfo', cat=item.Category.title, item=item.id)}}" class="a">{{item.title}} <span>({{item.Category.title}})</span></a>
+                <br>
+                {% endfor %}
+            </div>
+           
+        </div>
+</body>
+</html>

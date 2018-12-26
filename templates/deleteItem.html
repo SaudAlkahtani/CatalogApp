@@ -1,0 +1,10 @@
+{% include "privateHeader.html" %}
+
+<div class="DescBox">
+        <form action= "{{url_for('deleteItem', item=item.id)}}" method= 'post'>
+    <h1>Are you sure you want to delete the item "{{item.title}}" ?</h1>
+    <input type='submit' class="btn btn-warning btn-block" value='Yes, delete!'>
+    
+    <a href="{{url_for('displayCategories')}}" class="btn btn-primary btn-block">Cancel</a>
+    </form>
+</div>

@@ -1,0 +1,11 @@
+
+        
+            <div class="categories">
+                <h1 class="headline h1">Categories</h1>
+            <div class="items">
+                {% for Category in Categories %}
+                <a class="category_name" href="{{url_for('browseCategory',title=Category.title)}}">{{Category.title}} </a>
+                <br>
+                
+                {% endfor %}
+            </div>

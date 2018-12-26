@@ -1,0 +1,23 @@
+{% include "privateHeader.html" %}
+{% include "messages.html" %}
+
+<div class="DescBox">
+    <form action= "{{url_for('editItem', item=item.id)}}" method= 'post'>
+      
+    <label>Title</label>
+    <textarea requried  class="form-control" name="title" placeholder="{{item.title}}"></textarea>
+    <label>Description</label>
+    <textarea requried  class="form-control" rows='2' name="description" placeholder="{{item.description}}"></textarea>
+    <p>Category</p>
+    <select name='category' class="form-control" >
+    <option selected value="nothing">Choose new Category</option>
+    {% for Category in categories %} 
+    <option value="{{Category.id}}">{{Category.title}}</option>
+    {% endfor %}
+    </select>
+    <br>
+    <br>
+    <button type='submit' class="btn btn-primary btn-block" value='Edit'>Edit</button>
+</form>
+
+</div>

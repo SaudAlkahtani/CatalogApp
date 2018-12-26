@@ -1,0 +1,25 @@
+<!-- header used was from w3 school , i modified it a bit -->
+<!-- https://www.w3schools.com/howto/howto_css_responsive_header.asp -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Item Catalog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='main.css') }}" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+</head>
+<body>
+        <div class="header">
+                <a href="{{url_for('displayCategories')}}" class="btn btn-dark logo ">Item Catalog</a>
+                <div class="header-right">
+                  
+                  <a href="{{url_for('gdisconnect')}}" class="btn btn-danger btn-lg">Logout</a>
+                 
+                </div>
+              </div>

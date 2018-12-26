@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Item Catalog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen"  href="{{ url_for('static', filename='main.css') }}" />
+    
+</head>
+<body>
+
+        {% if log %}
+        {% include "privateHeader.html" %}
+        {% else %} 
+        {% include "header.html" %}
+        {% endif %}
+    
+        <div class="DescBox">
+         
+            <div class="itemDesc">
+              
+                <h1 class="headline">{{ item.title }}</h1>
+                <p class="itemDesc">{{item.description}}</p>
+            </div>
+                <div class="crud">
+                    {% if log %}
+                    {% if owner.email == registered %} 
+                    <a href="{{url_for('editItem',item=item.id)}}">Edit</a>
+                    
+                    <p1>|</p1>
+                    <a href="{{url_for('deleteItem',item=item.id)}}">Delete</a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+        </div>
+</body>
+</html>

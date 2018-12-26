@@ -1,0 +1,20 @@
+
+    {% include "privateHeader.html" %}
+    {% include "messages.html" %} 
+    <div class="content">
+        {% include "categories.html" %}
+        </div>
+        
+        <div class="latest">
+            <a href="{{url_for('addNewItem')}}" class="btn btn-primary" style="margin-top: 1.5%" >Add new Item</a>
+            <h1 class="headline">Latest</h1>
+           
+            {% for item in latest %}
+            <a href="{{url_for('ItemInfo', cat=item.Category.title, item=item.id)}}" class="a">{{item.title}} <span>({{item.Category.title}})</span></a>
+            <br>
+            {% endfor %}
+            <div name="result"></div>
+        </div>
+    </div>
+</body>
+</html>
