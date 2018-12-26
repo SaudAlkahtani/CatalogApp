@@ -31,29 +31,28 @@ def displayCategories():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits)
                     for x in xrange(32))
     login_session['state'] = state
-    print login_session['state']
     Categories = session.query(Category).all()
     items = session.query(Item).order_by("id desc").limit(12).all()
-    if login_session['logged_in']:
-        return render_template('privateHtml.html',
-                               Categories=Categories, latest=items)
+    if login_session.get('logged_in') is not None:
+        if login_session['logged_in']:
+            return render_template('privateHtml.html',
+                                   Categories=Categories, latest=items)
+        else:
+            return render_template('publicHtml.html', Categories=Categories,
+                                   latest=items, STATE=login_session['state'])
     else:
-        return render_template('publicHtml.html', Categories=Categories,
-                               latest=items, STATE=login_session['state'])
+        login_session['logged_in'] = False
+        return redirect(url_for('displayCategories'))
+
+
 # when the user is logged in , show him this page
-
-
 @app.route('/private')
 def privateHome():
     if 'username' not in login_session:
         flash('You have to be logged in to view this page!', category='danger')
         return redirect(url_for('displayCategories'))
     Categories = session.query(Category).all()
-    # print login_session['state']
     items = session.query(Item).order_by("id desc").limit(11).all()
-    # usrs = session.query(User).all()
-    # for u in usrs:
-    #     print u.email
     flash('You are now logged in as %s' % login_session['email'],
           category='info')
     return render_template('privateHtml.html', Categories=Categories,
@@ -135,8 +134,6 @@ def gconnect():
     login_session['logged_in'] = True
     # check if new user exsits in database or add him
     check = session.query(User).filter_by(email=login_session['email']).first()
-    print "test"
-    print check
     if check is None:
         newUser = User(email=login_session['email'],
                        fullname=login_session['username'],
@@ -161,7 +158,6 @@ def gdisconnect():
     h = httplib2.Http()
     result = h.request(url, 'GET')[0]
     if result['status'] == '200':
-        print "hi"
         del login_session['access_token']
         del login_session['gplus_id']
         del login_session['username']
@@ -210,9 +206,7 @@ def browseCategory(title):
     Cat = session.query(Category).filter_by(title=title).first()
     items = session.query(Item).filter_by(catg_id=Cat.id).all()
     logged_in = login_session['logged_in']
-    print logged_in
-    print "hmm"
-    
+
     return render_template('items.html', Categories=AllCat, items=items,
                            Cat=Cat, logged_in=logged_in,
                            STATE=login_session['state'])
@@ -222,7 +216,6 @@ def browseCategory(title):
 def ItemInfo(cat, item):
     # show 1 item info
     it = session.query(Item).filter_by(id=item).one()
-    print it.id
     if login_session['logged_in']:
         em = login_session['email']
         owner = session.query(User).filter_by(id=it.user_id).one()
@@ -301,7 +294,6 @@ def addNewItem():
         if (request.form['title'] and request.form['description'] and
                 request.form['category'] != "nothing"):
             # if all the fields are filled
-            print login_session['email']
             user1 = session.query(User). \
                 filter_by(email=login_session['email']).one()
             newItem = Item(title=request.form['title'],
@@ -309,8 +301,6 @@ def addNewItem():
                            catg_id=request.form['category'], user_id=user1.id)
             session.add(newItem)
             session.commit
-            print newItem.title
-            print newItem.id
             flash('Item was added Successfully!', category='success')
             return redirect(url_for('displayCategories'))
         else:
@@ -323,17 +313,8 @@ def addNewItem():
             flash('You must be logged in to add new items!', category='danger')
             return redirect(url_for('displayCategories'))
 
-
-@app.route('/test')
-def test():
-    if login_session['logged_in']:
-        print "logged in is: " + login_session['email']
-
-    for i in session.query(User).all():
-        print i.email
-        print i.fullname
-        print i.id
-        print i.photo
+# this method is used to clear your tokens and info if you have
+# problems logging out
 
 
 @app.route('/forceLogout')
