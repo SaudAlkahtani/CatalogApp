@@ -276,7 +276,7 @@ def deleteItem(item):
     if not itemToDelete.user_id == registered.id:
         flash('You have to be the owner of the item to delete it!',
               category='warning')
-        return redirect(url_for('displayCategory'))
+        return redirect(url_for('displayCategories'))
 
     if request.method == 'POST':
         session.delete(itemToDelete)
